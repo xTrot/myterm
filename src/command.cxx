@@ -8,11 +8,8 @@ using namespace std;
 
 string lastcommand;
 string line;
-bool isexit;
 
 command::command()
-
-
 
 : exit_requested_(false)
 
@@ -20,7 +17,7 @@ command::command()
 
 }
 
-bool command::is_valid_command_line(const string &line) {
+bool command::is_valid_command_line(const string &line) const{
 	
 	// TODO: Compare line to valid command structure using regex
 	
@@ -45,7 +42,10 @@ bool command::readline(){
 	
 	getline(input_stringstream,lastcommand,' ');
 	
-	return is_valid_command_line(line);
+	if(execvp(args[0],args)<0)
+		return false;
+	else
+		return true;
 }
 
 void command::print_usage() const
